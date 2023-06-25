@@ -1,0 +1,40 @@
+class Solution {
+public:
+    int findDuplicate(vector<int>& nums) {
+ // # using sorting and linear search(basic approach)
+        // sort(nums.begin(),nums.end());
+        // for(int i=0;i<nums.size()-1;i++){
+        //     if(nums[i]==nums[i+1]){
+        //         return nums[i];
+        //     }
+        // }
+        // return -1;
+
+ // # using sorting and linear search(optimal solution)
+        // vector<int>hash_array(nums.size(),0);
+        // for(int i=0;i<nums.size();i++){
+        //     if(hash_array[nums[i]]==1){
+        //         return nums[i];
+        //     }
+        //     hash_array[nums[i]]=1;
+        // }
+        // return -1;
+
+ // # using linked list cycle and tortoize method(most optimal solution)
+        int slow=nums[0];
+        int fast=nums[0];
+
+        do{
+            slow=nums[slow];
+            fast=nums[nums[fast]];
+        } while(fast!=slow);
+
+        fast=nums[0];
+        while(fast!=slow){
+            slow=nums[slow];
+            fast=nums[fast];
+        }
+        return slow;
+
+    }
+};
