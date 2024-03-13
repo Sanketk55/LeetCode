@@ -1,0 +1,60 @@
+498. Diagonal Traverse
+
+Given an m x n matrix mat, return an array of all the elements of the array in a diagonal order.
+
+Example 1:
+
+Input: mat = [[1,2,3],[4,5,6],[7,8,9]]
+Output: [1,2,4,7,5,3,6,8,9]
+
+Example 2:
+
+Input: mat = [[1,2],[3,4]]
+Output: [1,2,3,4]
+ 
+
+Constraints:
+
+m == mat.length
+n == mat[i].length
+1 <= m, n <= 104
+1 <= m * n <= 104
+-105 <= mat[i][j] <= 105
+
+
+
+class Solution {
+public:
+    vector<int> findDiagonalOrder(vector<vector<int>>& mat) {
+        vector<int>ans;
+         int m = mat.size();
+         int n = mat[0].size();
+
+         int row = 0, col = 0;
+         bool isReversed = false;
+         
+         while(col < n){
+             int i = row, j = col;
+             vector<int>temp;
+             while(i < m && i >= 0 && j < n && j >= 0){
+                 temp.push_back(mat[i][j]);
+                 i--;
+                 j++;
+             }
+             if(isReversed){
+                 reverse(temp.begin(), temp.end());
+             }
+             ans.insert(ans.end(), temp.begin(), temp.end());
+             isReversed = !isReversed;
+             
+             if(row != m-1){
+                 row ++;
+                 col =0;
+             }
+             else{
+                 col++;
+             }
+         }
+         return ans;
+    }
+};
