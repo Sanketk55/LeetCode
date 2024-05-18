@@ -1,0 +1,73 @@
+
+The n-queens puzzle is the problem of placing n queens on an n x n chessboard such that no two queens attack each other.
+
+Given an integer n, return the number of distinct solutions to the n-queens puzzle.
+
+ 
+
+Example 1:
+
+Input: n = 4
+Output: 2
+Explanation: There are two distinct solutions to the 4-queens puzzle as shown.
+
+
+Example 2:
+
+Input: n = 1
+Output: 1
+
+Constraints:
+
+1 <= n <= 9
+
+
+
+class Solution {
+private:
+    bool isSafe(int row, int col, int n, vector<string> board){
+        int tRow = row;
+        int tCol = col;
+
+        while(col>=0){
+            if(board[row][col]=='Q') return false;
+            col--;
+        }
+        col = tCol;
+        while(row>=0 && col>=0){
+            if(board[row][col]=='Q') return false;
+            col--;
+            row--;
+        }
+        while(tRow<n && tCol>=0){
+            if(board[tRow][tCol]=='Q') return false;
+            tCol--;
+            tRow++;
+        }
+        return true;
+    }
+    void recursion(int col, int n, vector<string> &board, int &ans){
+        if(col==n){
+            ans++;
+            return ;
+        }
+        for(int row=0;row<n;row++){
+            if(isSafe(row, col, n, board)){
+                board[row][col] = 'Q';
+                recursion(col+1, n, board, ans);
+                board[row][col] = '.';
+            }
+        }
+    }
+public:
+    int totalNQueens(int n) {
+        int ans = 0;
+        vector<string> board(n);
+        string s(n,'.');
+        for(int i=0;i<n;i++){
+            board[i] = s;
+        }
+        recursion(0, n, board, ans);
+        return ans;
+    }
+};
